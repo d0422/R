@@ -1,4 +1,5 @@
-data=read.csv('data.csv',header=T,fileEncoding="euc-kr")
+library(dplyr)
+data=read.csv('data.csv',header=T,fileEncoding="euc-kr" )
 str(data)
 # 각 컬럼별 데이터 파악-> 범주인지, 양인지 확인
 table(data$지역)
@@ -23,12 +24,12 @@ sum(is.na(data)) #결측값 삭제 확인
 # ===============데이터 정제 및 파악 완료
 
 # 그룹별 연차휴가부여와 연차휴가사용 비교
-data %>% group_by(학력) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용))
-data %>% group_by(직업) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용))
-data %>% group_by(성별) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용))
-data %>% group_by(월평균소득구간) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용))
-data %>% group_by(업종) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용))
-data %>% group_by(사업체규모) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용))
+data %>% group_by(학력) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용),비율=mean(연차휴가사용)/mean(연차휴가부여)*100)
+data %>% group_by(직업) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용),비율=mean(연차휴가사용)/mean(연차휴가부여)*100)
+data %>% group_by(성별) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용),비율=mean(연차휴가사용)/mean(연차휴가부여)*100)
+data %>% group_by(월평균소득구간) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용),비율=mean(연차휴가사용)/mean(연차휴가부여)*100)
+data %>% group_by(업종) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용), 비율=mean(연차휴가사용)/mean(연차휴가부여)*100)
+data %>% group_by(사업체규모) %>% summarise(연차휴가부여=mean(연차휴가부여), 연차휴가사용=mean(연차휴가사용),비율=mean(연차휴가사용)/mean(연차휴가부여)*100)
 
 # 20~30대의 학력별 분포
 data %>% filter(연령대=="20대"|연령대=="30대")%>% group_by(학력)%>% summarise(명수=n())
