@@ -1,0 +1,7 @@
+library(nnet)
+nn=nnet(Species~., iris, size=2)
+library(devtools)
+source('https://gist.githubusercontent.com/fawda123/7471137/raw/466c1474d0a505ff044412703516c34f1a4684a5/nnet_plot_update.r') 
+plot.nnet(nn)
+p=predict(nn,iris, type='class')
+table(p, iris$Species)
